@@ -161,4 +161,20 @@ public interface Pageable {
 		return isUnpaged() ? Optional.empty() : Optional.of(this);
 	}
 
+	/**
+	 * Returns an {@link OffsetCursorRequest} from this pageable if the page request {@link #isPaged() is paged}.
+	 *
+	 * @return
+	 * @throws IllegalStateException if the request is {@link #isUnpaged()}
+	 * @since 3.1
+	 */
+	default OffsetCursorRequest toCursorRequest() {
+
+		if (isUnpaged()) {
+			throw new IllegalArgumentException("Cannot create OffsetCursorRequest from an unpaged Pageable");
+		}
+
+		return OffsetCursorRequest.ofSize(getPageSize(), getSort()).withOffset(getOffset());
+	}
+
 }
