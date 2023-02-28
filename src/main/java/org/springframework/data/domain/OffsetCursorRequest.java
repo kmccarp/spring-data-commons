@@ -18,12 +18,14 @@ package org.springframework.data.domain;
 import java.io.Serializable;
 
 import org.springframework.util.Assert;
+import org.springframework.util.ObjectUtils;
 
 /**
  * Index/offset-based {@link CursorRequest}.
  *
  * @author Mark Paluch
  * @since 3.1
+ * @see Pageable#toCursorRequest()
  */
 public class OffsetCursorRequest implements CursorRequest, Serializable {
 
@@ -64,6 +66,9 @@ public class OffsetCursorRequest implements CursorRequest, Serializable {
 		return size;
 	}
 
+	/**
+	 * @return the current cursor offset.
+	 */
 	public long getOffset() {
 		return offset;
 	}
@@ -106,8 +111,8 @@ public class OffsetCursorRequest implements CursorRequest, Serializable {
 	 *
 	 * @return
 	 */
-	public OffsetCursorRequest withLast() {
-		return new OffsetCursorRequest(size, offset, sort, true);
+	public OffsetCursorRequest withLast(boolean isLast) {
+		return new OffsetCursorRequest(size, offset, sort, isLast);
 	}
 
 	@Override
@@ -122,7 +127,40 @@ public class OffsetCursorRequest implements CursorRequest, Serializable {
 	 * @return
 	 */
 	@Override
-	public CursorRequest nextCursorRequest() {
+	public OffsetCursorRequest nextCursorRequest() {
 		return new OffsetCursorRequest(size, offset + size, sort, isLast);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		OffsetCursorRequest that = (OffsetCursorRequest) o;
+		return size == that.size && offset == that.offset && ObjectUtils.nullSafeEquals(sort, that.sort)
+				&& isLast == that.isLast;
+	}
+
+	@Override
+	public int hashCode() {
+
+		int result = ObjectUtils.nullSafeHashCode(size);
+		result = 31 * result + ObjectUtils.nullSafeHashCode(offset);
+		result = 31 * result + ObjectUtils.nullSafeHashCode(sort);
+		result = 31 * result + ObjectUtils.nullSafeHashCode(isLast);
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getClass().getSimpleName());
+		sb.append(" [size=").append(size);
+		sb.append(", offset=").append(offset);
+		sb.append(", sort=").append(sort);
+		sb.append(", hasNext=").append(hasNext());
+		sb.append(']');
+		return sb.toString();
 	}
 }

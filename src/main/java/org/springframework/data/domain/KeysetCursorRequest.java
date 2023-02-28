@@ -47,6 +47,7 @@ public class KeysetCursorRequest implements CursorRequest, Serializable {
 	KeysetCursorRequest(int size, Sort sort, Map<String, Object> keys, @Nullable KeysetCursorRequest next) {
 
 		Assert.isTrue(size > 0, "Size must be greater than zero");
+		Assert.notNull(sort, "Sort must not be null");
 
 		this.size = size;
 		this.sort = sort;
@@ -54,11 +55,15 @@ public class KeysetCursorRequest implements CursorRequest, Serializable {
 		this.next = next;
 	}
 
-	public static KeysetCursorRequest ofSize(int pageSize, Sort sort) {
-
-		Assert.isTrue(sort.isSorted(), "KeySet pagination requires a stable sort order");
-
-		return new KeysetCursorRequest(pageSize, sort, Collections.emptyMap(), null);
+	/**
+	 * Creates a new {@link KeysetCursorRequest} given the {@code size} and {@link Sort}.
+	 *
+	 * @param size the page size.
+	 * @param sort the sort to apply.
+	 * @return the first {@link KeysetCursorRequest} for {@code size} and {@link Sort}.
+	 */
+	public static KeysetCursorRequest ofSize(int size, Sort sort) {
+		return new KeysetCursorRequest(size, sort, Collections.emptyMap(), null);
 	}
 
 	@Override
@@ -71,24 +76,6 @@ public class KeysetCursorRequest implements CursorRequest, Serializable {
 		return new KeysetCursorRequest(size, sort, keys, next);
 	}
 
-	public KeysetCursorRequest withNext(Map<String, Object> keys) {
-		return new KeysetCursorRequest(size, sort, this.keys, new KeysetCursorRequest(size, sort, keys));
-	}
-
-	@Override
-	public boolean isFirst() {
-		return next == null;
-	}
-
-	@Override
-	public CursorRequest nextCursorRequest() {
-
-		Assert.state(!isLast(), "Cannot create a next cursor request beyond the end of the cursor");
-		Assert.state(this.next != null, "Cannot create a next cursor from a non-executed KeysetCursorRequest");
-
-		return next;
-	}
-
 	@Override
 	public Sort getSort() {
 		return this.sort;
@@ -98,8 +85,39 @@ public class KeysetCursorRequest implements CursorRequest, Serializable {
 		return this.keys;
 	}
 
+	/**
+	 * Creates a {@link #hasNext()}-capable {@link KeysetCursorRequest} given {@code keys}. This method creates a new
+	 * cursor instances by copying all properties and providing a {@link #nextCursorRequest()}.
+	 *
+	 * @param keys the next cursor keyset.
+	 * @return a new copy of this cursor request with a {@link #nextCursorRequest() next cursor request} associated.
+	 */
+	public KeysetCursorRequest withNext(Map<String, Object> keys) {
+		return new KeysetCursorRequest(size, sort, this.keys, new KeysetCursorRequest(size, sort, keys));
+	}
+
+	@Override
+	public KeysetCursorRequest withLast(boolean isLast) {
+		return new KeysetCursorRequest(size, sort, this.keys, isLast ? null : this.next);
+	}
+
+	@Override
+	public boolean isFirst() {
+		return keys.isEmpty();
+	}
+
+	@Override
 	public boolean hasNext() {
 		return next != null;
+	}
+
+	@Override
+	public KeysetCursorRequest nextCursorRequest() {
+
+		Assert.state(!isLast(), "Cannot create a next cursor request beyond the end of the cursor");
+		Assert.state(this.next != null, "Cannot create a next cursor from a non-executed KeysetCursorRequest");
+
+		return next;
 	}
 
 	@Override
@@ -121,5 +139,17 @@ public class KeysetCursorRequest implements CursorRequest, Serializable {
 		result = 31 * result + ObjectUtils.nullSafeHashCode(keys);
 		result = 31 * result + ObjectUtils.nullSafeHashCode(next);
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getClass().getSimpleName());
+		sb.append(" [size=").append(size);
+		sb.append(", sort=").append(sort);
+		sb.append(", keys=").append(keys.size());
+		sb.append(", hasNext=").append(hasNext());
+		sb.append(']');
+		return sb.toString();
 	}
 }

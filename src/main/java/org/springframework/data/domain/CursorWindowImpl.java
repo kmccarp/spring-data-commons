@@ -104,6 +104,6 @@ class CursorWindowImpl<T> implements CursorWindow<T> {
 
 	@Override
 	public String toString() {
-		return "CursorWindow " + items;
+		return "CursorWindow (" + cursorRequest + ") " + items;
 	}
 }

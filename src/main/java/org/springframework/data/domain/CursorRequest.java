@@ -16,7 +16,15 @@
 package org.springframework.data.domain;
 
 /**
+ * Interface defining a request for a cursor window. Typically used to fetch subsets of query results if the query
+ * results are too large to fit entirely into memory and to be able to resume a cursoring session.
+ *
  * @author Mark Paluch
+ * @since 3.1
+ * @see OffsetCursorRequest
+ * @see KeysetCursorRequest
+ * @see CursorWindow
+ * @see Pageable#toCursorRequest()
  */
 public interface CursorRequest {
 
@@ -28,10 +36,10 @@ public interface CursorRequest {
 	int getSize();
 
 	/**
-	 * Create a new cursor request with the given size.
+	 * Creates a new cursor request with the given size.
 	 *
-	 * @param size
-	 * @return
+	 * @param size the cursor result size.
+	 * @return a new {@link CursorRequest} with {@code size} applied.
 	 */
 	CursorRequest withSize(int size);
 
@@ -54,6 +62,8 @@ public interface CursorRequest {
 	 *
 	 * @return
 	 */
+	// TODO: This method might go away since we only know if the request is a last one when we have attempted the cursor
+	// request.
 	default boolean isLast() {
 		return !hasNext();
 	}
@@ -68,9 +78,16 @@ public interface CursorRequest {
 	/**
 	 * Returns the next {@link CursorRequest}.
 	 *
-	 * @return
+	 * @return a new cursor request to be used as the {@link #hasNext() next} cursor request.
 	 * @throws IllegalStateException if there is no {@link #hasNext() next} cursor window.
 	 */
 	CursorRequest nextCursorRequest();
 
+	/**
+	 * Creates a {@link #isLast() last cursor request} if {@code isLast} is {@code true}.
+	 *
+	 * @param isLast whether the created cursor request should indicate to be the last cursor request.
+	 * @return a new cursor request to be used as the {@link #isLast() last} cursor request.
+	 */
+	CursorRequest withLast(boolean isLast);
 }
