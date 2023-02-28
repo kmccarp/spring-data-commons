@@ -186,12 +186,12 @@ public class ResultProcessor {
 
 		try {
 			return CollectionFactory.createCollection(source.getClass(), source.size());
-		} catch (RuntimeException o_O) {
+		} catch (RuntimeException oO) {
 			return CollectionFactory.createApproximateCollection(source, source.size());
 		}
 	}
 
-	private static class ChainingConverter implements Converter<Object, Object> {
+	private static final class ChainingConverter implements Converter<Object, Object> {
 
 		private final Class<?> targetType;
 		private final Converter<Object, Object> delegate;
@@ -242,7 +242,7 @@ public class ResultProcessor {
 	 * @author Oliver Gierke
 	 * @since 1.12
 	 */
-	private static enum NoOpConverter implements Converter<Object, Object> {
+	private enum NoOpConverter implements Converter<Object, Object> {
 
 		INSTANCE;
 

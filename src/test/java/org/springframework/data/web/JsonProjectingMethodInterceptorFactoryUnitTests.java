@@ -244,7 +244,8 @@ class JsonProjectingMethodInterceptorFactoryUnitTests {
 	@AllArgsConstructor
 	@NoArgsConstructor
 	static class Address {
-		private String zipCode, city;
+		private String zipCode;
+		private String city;
 	}
 
 	@ProjectedPayload

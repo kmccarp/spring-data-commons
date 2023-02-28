@@ -147,9 +147,9 @@ public class QuerydslBindingsFactory implements ApplicationContextAware {
 
 			try {
 				return entityPathResolver.createPath(key.getType());
-			} catch (IllegalArgumentException o_O) {
+			} catch (IllegalArgumentException oO) {
 				throw new IllegalStateException(
-						String.format(INVALID_DOMAIN_TYPE, key.getType(), QuerydslPredicate.class.getSimpleName()), o_O);
+						String.format(INVALID_DOMAIN_TYPE, key.getType(), QuerydslPredicate.class.getSimpleName()), oO);
 			}
 		});
 	}

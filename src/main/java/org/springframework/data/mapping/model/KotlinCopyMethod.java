@@ -46,7 +46,7 @@ import org.springframework.util.Assert;
  * @author Mark Paluch
  * @since 2.1
  */
-class KotlinCopyMethod {
+final class KotlinCopyMethod {
 
 	private final Method publicCopyMethod;
 	private final Method syntheticCopyMethod;
@@ -173,7 +173,7 @@ class KotlinCopyMethod {
 
 		List<KParameter> constructorArguments = getComponentArguments(primaryConstructor);
 
-		return Arrays.stream(type.getDeclaredMethods()).filter(it -> it.getName().equals("copy") //
+		return Arrays.stream(type.getDeclaredMethods()).filter(it -> "copy".equals(it.getName()) //
 				&& !it.isSynthetic() //
 				&& !Modifier.isStatic(it.getModifiers()) //
 				&& it.getReturnType().equals(type) //
@@ -229,7 +229,7 @@ class KotlinCopyMethod {
 		}
 
 		return Arrays.stream(type.getDeclaredMethods()) //
-				.filter(it -> it.getName().equals("copy$default") //
+				.filter(it -> "copy$default".equals(it.getName()) //
 						&& Modifier.isStatic(it.getModifiers()) //
 						&& it.getReturnType().equals(type))
 				.filter(Method::isSynthetic) //

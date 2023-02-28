@@ -53,7 +53,7 @@ public interface RepositoryFragment<T> {
 	 * @return
 	 */
 	static <T> RepositoryFragment<T> implemented(T implementation) {
-		return new ImplementedRepositoryFragment<T>(Optional.empty(), implementation);
+		return new ImplementedRepositoryFragment<>(Optional.empty(), implementation);
 	}
 
 	/**

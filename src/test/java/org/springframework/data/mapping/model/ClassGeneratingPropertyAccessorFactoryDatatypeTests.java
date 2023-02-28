@@ -242,7 +242,7 @@ public class ClassGeneratingPropertyAccessorFactoryDatatypeTests {
 
 	// DATACMNS-916
 	@AccessType(Type.FIELD)
-	private final static class PrivateFinalFieldAccess {
+	private static final class PrivateFinalFieldAccess {
 
 		int primitiveInteger;
 		int[] primitiveIntegerArray;
@@ -292,7 +292,7 @@ public class ClassGeneratingPropertyAccessorFactoryDatatypeTests {
 	// DATACMNS-916
 	@AccessType(Type.PROPERTY)
 	@Data
-	private final static class PrivateFinalPropertyAccess {
+	private static final class PrivateFinalPropertyAccess {
 
 		int primitiveInteger;
 		int[] primitiveIntegerArray;

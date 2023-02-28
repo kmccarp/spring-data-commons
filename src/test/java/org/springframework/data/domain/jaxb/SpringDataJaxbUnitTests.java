@@ -127,8 +127,8 @@ class SpringDataJaxbUnitTests {
 
 			return builder.toString();
 
-		} catch (IOException o_O) {
-			throw new RuntimeException(o_O);
+		} catch (IOException oO) {
+			throw new RuntimeException(oO);
 		}
 	}
 

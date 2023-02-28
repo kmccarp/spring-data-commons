@@ -216,7 +216,7 @@ class AbstractMappingContextUnitTests {
 	@Test // DATACMNS-1574
 	void cleansUpCacheForRuntimeException() {
 
-		var context = TypeRejectingMappingContext.rejecting(() -> new RuntimeException(),
+		var context = TypeRejectingMappingContext.rejecting(RuntimeException::new,
 				Unsupported.class);
 
 		assertThatExceptionOfType(RuntimeException.class) //
@@ -510,7 +510,7 @@ class AbstractMappingContextUnitTests {
 
 	static class ShadowingPropertyAssignable extends ShadowedPropertyAssignable {
 
-		private Integer value;
+		private final Integer value;
 
 		ShadowingPropertyAssignable(Integer value) {
 			this.value = value;
@@ -539,7 +539,7 @@ class AbstractMappingContextUnitTests {
 		Map<MapKey, Integer> mapOfKeyToPerson;
 	}
 
-	static abstract class Base$$SpringProxy$873fa2e extends Base implements SpringProxy, Advised {
+	abstract static class Base$$SpringProxy$873fa2e extends Base implements SpringProxy, Advised {
 
 	}
 

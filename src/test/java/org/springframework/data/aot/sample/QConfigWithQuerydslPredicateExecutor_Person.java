@@ -20,6 +20,8 @@ import org.springframework.data.aot.sample.ConfigWithQuerydslPredicateExecutor.P
 
 public class QConfigWithQuerydslPredicateExecutor_Person extends EntityPathBase<Person> {
 
+	private static final long serialVersionUID = 1;
+
 	public QConfigWithQuerydslPredicateExecutor_Person(Class type, String variable) {
 		super(type, variable);
 	}
