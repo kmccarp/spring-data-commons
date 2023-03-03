@@ -128,16 +128,16 @@ class ReflectionEntityInstantiatorUnitTests<P extends PersistentProperty<P>> {
 			INSTANCE.createInstance(entity, provider);
 			fail("Expected MappingInstantiationException");
 
-		} catch (MappingInstantiationException o_O) {
+		} catch (MappingInstantiationException oO) {
 
-			assertThat(o_O.getConstructor()).hasValue(constructor);
-			assertThat(o_O.getConstructorArguments()).isEqualTo(parameters);
-			assertThat(o_O.getEntityType()).hasValue(Sample.class);
+			assertThat(oO.getConstructor()).hasValue(constructor);
+			assertThat(oO.getConstructorArguments()).isEqualTo(parameters);
+			assertThat(oO.getEntityType()).hasValue(Sample.class);
 
-			assertThat(o_O.getMessage()).contains(Sample.class.getName());
-			assertThat(o_O.getMessage()).contains(Long.class.getName());
-			assertThat(o_O.getMessage()).contains(String.class.getName());
-			assertThat(o_O.getMessage()).contains("FOO");
+			assertThat(oO.getMessage()).contains(Sample.class.getName());
+			assertThat(oO.getMessage()).contains(Long.class.getName());
+			assertThat(oO.getMessage()).contains(String.class.getName());
+			assertThat(oO.getMessage()).contains("FOO");
 		}
 	}
 

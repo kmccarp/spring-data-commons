@@ -231,7 +231,7 @@ public class AbstractPersistentPropertyUnitTests {
 
 		assertThat(property.isAssociation()).isTrue();
 		assertThat(property.getAssociationTargetType()).isEqualTo(JMoleculesAggregate.class);
-		assertThat(property.getPersistentEntityTypeInformation()).extracting(it -> it.getType())
+		assertThat(property.getPersistentEntityTypeInformation()).extracting(TypeInformation::getType)
 				.containsExactly((Class) JMoleculesAggregate.class);
 	}
 
@@ -270,8 +270,8 @@ public class AbstractPersistentPropertyUnitTests {
 					.filter(it -> it.getName().equals(propertyName))//
 					.findFirst();
 
-		} catch (IntrospectionException o_O) {
-			throw new RuntimeException(o_O);
+		} catch (IntrospectionException oO) {
+			throw new RuntimeException(oO);
 		}
 	}
 
@@ -297,7 +297,8 @@ public class AbstractPersistentPropertyUnitTests {
 	class ConcreteGetter extends GenericGetter<String> {}
 
 	@SuppressWarnings("serial")
-	class TestClassSet extends TreeSet<Object> {}
+	class TestClassSet extends TreeSet<Object> {
+		private static final long serialVersionUID = 1;}
 
 	@SuppressWarnings("rawtypes")
 	class TestClassComplex {

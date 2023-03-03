@@ -251,6 +251,6 @@ class ProjectingMethodInterceptorUnitTests {
 	}
 
 	enum HelperEnum {
-		Helpful, NotSoMuch;
+		Helpful, NotSoMuch
 	}
 }

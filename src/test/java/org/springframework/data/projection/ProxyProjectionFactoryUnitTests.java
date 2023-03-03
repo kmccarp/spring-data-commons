@@ -325,7 +325,8 @@ class ProxyProjectionFactoryUnitTests {
 
 	static class Address {
 
-		String zipCode, city;
+		String zipCode;
+		String city;
 	}
 
 	interface CustomerExcerpt {
@@ -376,7 +377,8 @@ class ProxyProjectionFactoryUnitTests {
 	static class Customer implements Contact {
 
 		Long id;
-		String firstname, lastname;
+		String firstname;
+		String lastname;
 		Date birthdate;
 		Address address;
 		byte[] picture;

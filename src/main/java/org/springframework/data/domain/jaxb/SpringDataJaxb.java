@@ -122,8 +122,8 @@ public abstract class SpringDataJaxb {
 		for (S element : source) {
 			try {
 				result.add(adapter.unmarshal(element));
-			} catch (Exception o_O) {
-				throw new RuntimeException(o_O);
+			} catch (Exception oO) {
+				throw new RuntimeException(oO);
 			}
 		}
 		return result;

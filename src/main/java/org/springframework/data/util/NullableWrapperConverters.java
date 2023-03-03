@@ -64,9 +64,9 @@ public abstract class NullableWrapperConverters {
 	private static final boolean VAVR_PRESENT = ClassUtils.isPresent("io.vavr.control.Option",
 			NullableWrapperConverters.class.getClassLoader());
 
-	private static final Set<WrapperType> WRAPPER_TYPES = new HashSet<WrapperType>();
-	private static final Set<WrapperType> UNWRAPPER_TYPES = new HashSet<WrapperType>();
-	private static final Set<Converter<Object, Object>> UNWRAPPERS = new HashSet<Converter<Object, Object>>();
+	private static final Set<WrapperType> WRAPPER_TYPES = new HashSet<>();
+	private static final Set<WrapperType> UNWRAPPER_TYPES = new HashSet<>();
+	private static final Set<Converter<Object, Object>> UNWRAPPERS = new HashSet<>();
 	private static final Map<Class<?>, Boolean> supportsCache = new ConcurrentReferenceHashMap<>();
 
 	static {
@@ -220,7 +220,7 @@ public abstract class NullableWrapperConverters {
 	 *
 	 * @author Oliver Gierke
 	 */
-	private static abstract class AbstractWrapperTypeConverter implements GenericConverter {
+	private abstract static class AbstractWrapperTypeConverter implements GenericConverter {
 
 		private final Object nullValue;
 		private final Iterable<Class<?>> wrapperTypes;
@@ -495,7 +495,7 @@ public abstract class NullableWrapperConverters {
 		}
 
 		enum Cardinality {
-			NONE, SINGLE, MULTI;
+			NONE, SINGLE, MULTI
 		}
 
 		private final Class<?> type;

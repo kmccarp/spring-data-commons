@@ -121,8 +121,8 @@ class KotlinClassGeneratingEntityInstantiator extends ClassGeneratingEntityInsta
 				java.lang.reflect.Parameter[] constructorParameters = constructor.getParameters();
 				java.lang.reflect.Parameter[] candidateParameters = candidate.getParameters();
 
-				if (!candidateParameters[candidateParameters.length - 1].getType().getName()
-						.equals("kotlin.jvm.internal.DefaultConstructorMarker")) {
+				if (!"kotlin.jvm.internal.DefaultConstructorMarker"
+						.equals(candidateParameters[candidateParameters.length - 1].getType().getName())) {
 					continue;
 				}
 

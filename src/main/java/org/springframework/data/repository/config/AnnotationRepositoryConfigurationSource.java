@@ -256,7 +256,7 @@ public class AnnotationRepositoryConfigurationSource extends RepositoryConfigura
 
 		try {
 			return attributes.getEnum(BOOTSTRAP_MODE);
-		} catch (IllegalArgumentException o_O) {
+		} catch (IllegalArgumentException oO) {
 			return BootstrapMode.DEFAULT;
 		}
 	}

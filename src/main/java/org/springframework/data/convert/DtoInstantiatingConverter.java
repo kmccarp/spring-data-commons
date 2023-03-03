@@ -25,9 +25,7 @@ import org.springframework.data.mapping.SimplePropertyHandler;
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.mapping.model.EntityInstantiator;
 import org.springframework.data.mapping.model.EntityInstantiators;
-import org.springframework.data.mapping.model.ParameterValueProvider;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -77,20 +75,15 @@ public class DtoInstantiatingConverter implements Converter<Object, Object> {
 		PersistentEntity<?, ? extends PersistentProperty<?>> targetEntity = context.getRequiredPersistentEntity(targetType);
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		Object dto = instantiator.createInstance(targetEntity, new ParameterValueProvider() {
+		Object dto = instantiator.createInstance(targetEntity, parameter -> {
 
-			@Override
-			@Nullable
-			public Object getParameterValue(Parameter parameter) {
+			String name = parameter.getName();
 
-				String name = parameter.getName();
-
-				if (name == null) {
-					throw new IllegalArgumentException(String.format("Parameter %s does not have a name", parameter));
-				}
-
-				return sourceAccessor.getProperty(sourceEntity.getRequiredPersistentProperty(name));
+			if (name == null) {
+				throw new IllegalArgumentException(String.format("Parameter %s does not have a name", parameter));
 			}
+
+			return sourceAccessor.getProperty(sourceEntity.getRequiredPersistentProperty(name));
 		});
 
 		PersistentPropertyAccessor<Object> targetAccessor = targetEntity.getPropertyAccessor(dto);
