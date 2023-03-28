@@ -117,7 +117,7 @@ public class SpringDataWebConfiguration implements WebMvcConfigurer, BeanClassLo
 			return;
 		}
 
-		DomainClassConverter<FormattingConversionService> converter = new DomainClassConverter<FormattingConversionService>(
+		DomainClassConverter<FormattingConversionService> converter = new DomainClassConverter<>(
 				conversionService);
 		converter.setApplicationContext(context);
 	}

@@ -174,7 +174,7 @@ class EntityCallbackDiscoverer {
 			entityTypeCache.put(callbackType, eventType);
 		}
 
-		return (eventType != ResolvableType.NONE ? eventType : null);
+		return eventType != ResolvableType.NONE ? eventType : null;
 	}
 
 	/**
@@ -255,7 +255,7 @@ class EntityCallbackDiscoverer {
 	protected boolean supportsEvent(Class<?> callback, ResolvableType entityType) {
 
 		ResolvableType declaredEventType = resolveDeclaredEntityType(callback);
-		return (declaredEventType == null || declaredEventType.isAssignableFrom(entityType));
+		return declaredEventType == null || declaredEventType.isAssignableFrom(entityType);
 	}
 
 	/**
@@ -420,8 +420,8 @@ class EntityCallbackDiscoverer {
 
 			CallbackCacheKey otherKey = (CallbackCacheKey) other;
 
-			return (this.callbackType.equals(otherKey.callbackType)
-					&& ObjectUtils.nullSafeEquals(this.entityType, otherKey.entityType));
+			return this.callbackType.equals(otherKey.callbackType)
+					&& ObjectUtils.nullSafeEquals(this.entityType, otherKey.entityType);
 		}
 
 		@Override

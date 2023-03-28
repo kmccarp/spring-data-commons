@@ -38,7 +38,7 @@ import org.springframework.util.Assert;
  */
 public class TraversalContext {
 
-	private Map<PersistentProperty<?>, Function<Object, Object>> handlers = new HashMap<>();
+	private final Map<PersistentProperty<?>, Function<Object, Object>> handlers = new HashMap<>();
 
 	/**
 	 * Registers a {@link Function} to post-process values for the given property.
@@ -124,7 +124,7 @@ public class TraversalContext {
 		Assert.isTrue(type.isAssignableFrom(property.getType()), () -> String
 				.format("Cannot register a property handler for %s on a property of type %s", type, property.getType()));
 
-		Function<Object, T> caster = (Function<Object, T>) it -> type.cast(it);
+		Function<Object, T> caster = (Function<Object, T>) type::cast;
 
 		return registerHandler(property, caster.andThen(handler));
 	}

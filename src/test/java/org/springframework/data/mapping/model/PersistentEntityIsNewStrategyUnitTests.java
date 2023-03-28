@@ -35,7 +35,7 @@ import org.springframework.data.mapping.context.SampleMappingContext;
  */
 class PersistentEntityIsNewStrategyUnitTests {
 
-	private SampleMappingContext context = new SampleMappingContext();
+	private final SampleMappingContext context = new SampleMappingContext();
 
 	@Test // DATACMNS-133
 	void detectsNewEntityForPrimitiveId() {

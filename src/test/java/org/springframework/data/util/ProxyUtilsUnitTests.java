@@ -77,5 +77,6 @@ public class ProxyUtilsUnitTests {
 
 	static class AnotherSample {}
 
-	static class SomeTypeWithInterface implements Serializable {}
+	static class SomeTypeWithInterface implements Serializable {
+		private static final long serialVersionUID = 1;}
 }

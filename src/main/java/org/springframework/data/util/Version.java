@@ -78,8 +78,8 @@ public class Version implements Comparable<Version> {
 			if (StringUtils.hasText(input)) {
 				try {
 					intParts[i] = Integer.parseInt(input);
-				} catch (IllegalArgumentException o_O) {
-					throw new IllegalArgumentException(String.format(VERSION_PARSE_ERROR, input, version), o_O);
+				} catch (IllegalArgumentException oO) {
+					throw new IllegalArgumentException(String.format(VERSION_PARSE_ERROR, input, version), oO);
 				}
 			}
 		}

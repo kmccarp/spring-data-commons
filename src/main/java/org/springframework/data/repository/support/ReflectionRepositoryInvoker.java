@@ -202,8 +202,8 @@ class ReflectionRepositoryInvoker implements RepositoryInvoker {
 
 		try {
 			return conversionService.convert(value, TypeDescriptor.forObject(value), new TypeDescriptor(parameter));
-		} catch (ConversionException o_O) {
-			throw new QueryMethodParameterConversionException(value, parameter, o_O);
+		} catch (ConversionException oO) {
+			throw new QueryMethodParameterConversionException(value, parameter, oO);
 		}
 	}
 

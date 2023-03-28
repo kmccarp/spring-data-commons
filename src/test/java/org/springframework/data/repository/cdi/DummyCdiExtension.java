@@ -90,6 +90,8 @@ public class DummyCdiExtension extends CdiRepositoryExtensionSupport {
 	@SuppressWarnings("serial")
 	static class MyCustomScope extends AbstractContext {
 
+		private static final long serialVersionUID = 1;
+
 		MyCustomScope() {
 			super(MyScope.class);
 			setActive(true);

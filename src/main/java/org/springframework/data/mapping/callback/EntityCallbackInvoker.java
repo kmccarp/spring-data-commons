@@ -52,13 +52,6 @@ interface EntityCallbackInvoker {
 		if (moduleSeparatorIndex != -1 && exceptionMessage.startsWith(eventClass.getName(), moduleSeparatorIndex + 1)) {
 			return true;
 		}
-
-		// On Java 18, the message is "IllegalArgumentException: argument type mismatch"
-		if (exceptionMessage.equals("argument type mismatch")) {
-			return true;
-		}
-
-		// Assuming an unrelated class cast failure...
-		return false;
+		return "argument type mismatch".equals(exceptionMessage);
 	}
 }

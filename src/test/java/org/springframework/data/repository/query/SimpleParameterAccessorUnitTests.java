@@ -33,7 +33,10 @@ import org.springframework.data.domain.Sort;
  */
 class SimpleParameterAccessorUnitTests {
 
-	Parameters<?, ?> parameters, cursorRequestParameters, sortParameters, pageableParameters;
+	Parameters<?, ?> parameters;
+	Parameters<?, ?> cursorRequestParameters;
+	Parameters<?, ?> sortParameters;
+	Parameters<?, ?> pageableParameters;
 
 	@BeforeEach
 	void setUp() throws SecurityException, NoSuchMethodException {
