@@ -15,8 +15,7 @@
  */
 package org.springframework.data.domain;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -48,12 +47,7 @@ class ManagedTypesUnitTests {
 	@Test // GH-2634
 	void supplierBasedManagedTypesAreEvaluatedLazily() {
 
-		Supplier<Iterable<Class<?>>> typesSupplier = spy(new Supplier<Iterable<Class<?>>>() {
-			@Override
-			public Iterable<Class<?>> get() {
-				return Collections.singleton(Object.class);
-			}
-		});
+		Supplier<Iterable<Class<?>>> typesSupplier = spy(() -> Collections.singleton(Object.class));
 
 		ManagedTypes managedTypes = ManagedTypes.fromSupplier(typesSupplier);
 

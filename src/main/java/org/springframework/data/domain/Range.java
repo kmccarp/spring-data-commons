@@ -31,7 +31,7 @@ import org.springframework.util.ObjectUtils;
  */
 public final class Range<T> {
 
-	private final static Range<?> UNBOUNDED = Range.of(Bound.unbounded(), Bound.unbounded());
+	private static final Range<?> UNBOUNDED = Range.of(Bound.unbounded(), Bound.unbounded());
 
 	/**
 	 * The lower bound of the range.
@@ -457,8 +457,9 @@ public final class Range<T> {
 				return true;
 			}
 
-			if (inclusive != bound.inclusive)
+			if (inclusive != bound.inclusive) {
 				return false;
+			}
 
 			return ObjectUtils.nullSafeEquals(value, bound.value);
 		}

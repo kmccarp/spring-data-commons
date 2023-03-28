@@ -126,7 +126,7 @@ class MapDataBinder extends WebDataBinder {
 
 			try {
 				return getPropertyPath(propertyName) != null;
-			} catch (PropertyReferenceException o_O) {
+			} catch (PropertyReferenceException oO) {
 				return false;
 			}
 		}

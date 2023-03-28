@@ -121,7 +121,7 @@ class DefaultImplementationLookupConfiguration implements ImplementationLookupCo
 
 			MetadataReader reader = getMetadataReaderFactory().getMetadataReader(beanClassName);
 			return filters.stream().anyMatch(it -> matches(it, reader));
-		} catch (IOException o_O) {
+		} catch (IOException oO) {
 			return true;
 		}
 	}

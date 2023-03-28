@@ -46,7 +46,7 @@ class QuerydslBindingsUnitTests {
 	QuerydslPredicateBuilder builder;
 	QuerydslBindings bindings;
 
-	static final SingleValueBinding<StringPath, String> CONTAINS_BINDING = (path, value) -> path.contains(value);
+	static final SingleValueBinding<StringPath, String> CONTAINS_BINDING = StringExpression::contains;
 
 	@BeforeEach
 	void setUp() {

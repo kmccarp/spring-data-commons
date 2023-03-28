@@ -32,7 +32,7 @@ import org.springframework.data.util.MethodInvocationRecorder.Recorded;
  */
 class MethodInvocationRecorderUnitTests {
 
-	private Recorded<Foo> recorder = MethodInvocationRecorder.forProxyOf(Foo.class);
+	private final Recorded<Foo> recorder = MethodInvocationRecorder.forProxyOf(Foo.class);
 
 	@Test // DATACMNS-1449
 	void rejectsFinalTypes() {

@@ -328,7 +328,8 @@ class ExtensionAwareEvaluationContextProviderUnitTests {
 
 		public static String DUMMY_KEY = "dummy";
 
-		private final String key, value;
+		private final String key;
+		private final String value;
 
 		@Override
 		public String getExtensionId() {
@@ -353,8 +354,8 @@ class ExtensionAwareEvaluationContextProviderUnitTests {
 			try {
 				functions.put("aliasedMethod", new Function(getClass().getMethod("extensionMethod")));
 				return functions;
-			} catch (Exception o_O) {
-				throw new RuntimeException(o_O);
+			} catch (Exception oO) {
+				throw new RuntimeException(oO);
 			}
 		}
 

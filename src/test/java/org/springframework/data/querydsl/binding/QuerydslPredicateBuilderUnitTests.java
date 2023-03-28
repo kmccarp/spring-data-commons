@@ -54,7 +54,7 @@ class QuerydslPredicateBuilderUnitTests {
 
 	static final TypeInformation<User> USER_TYPE = TypeInformation.of(User.class);
 	static final QuerydslBindings DEFAULT_BINDINGS = new QuerydslBindings();
-	static final SingleValueBinding<StringPath, String> CONTAINS_BINDING = (path, value) -> path.contains(value);
+	static final SingleValueBinding<StringPath, String> CONTAINS_BINDING = StringExpression::contains;
 
 	QuerydslPredicateBuilder builder;
 	MultiValueMap<String, String> values;

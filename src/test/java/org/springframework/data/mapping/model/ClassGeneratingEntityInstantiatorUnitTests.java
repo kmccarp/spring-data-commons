@@ -16,7 +16,6 @@
 package org.springframework.data.mapping.model;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.lang.reflect.Constructor;
@@ -140,16 +139,16 @@ class ClassGeneratingEntityInstantiatorUnitTests<P extends PersistentProperty<P>
 			this.instance.createInstance(entity, provider);
 			fail("Expected MappingInstantiationException");
 
-		} catch (MappingInstantiationException o_O) {
+		} catch (MappingInstantiationException oO) {
 
-			assertThat(o_O.getConstructor()).hasValue(constructor);
-			assertThat(o_O.getConstructorArguments()).isEqualTo(parameters);
-			assertThat(o_O.getEntityType()).hasValue(Sample.class);
+			assertThat(oO.getConstructor()).hasValue(constructor);
+			assertThat(oO.getConstructorArguments()).isEqualTo(parameters);
+			assertThat(oO.getEntityType()).hasValue(Sample.class);
 
-			assertThat(o_O.getMessage()).contains(Sample.class.getName());
-			assertThat(o_O.getMessage()).contains(Long.class.getName());
-			assertThat(o_O.getMessage()).contains(String.class.getName());
-			assertThat(o_O.getMessage()).contains("FOO");
+			assertThat(oO.getMessage()).contains(Sample.class.getName());
+			assertThat(oO.getMessage()).contains(Long.class.getName());
+			assertThat(oO.getMessage()).contains(String.class.getName());
+			assertThat(oO.getMessage()).contains("FOO");
 		}
 	}
 
@@ -163,21 +162,17 @@ class ClassGeneratingEntityInstantiatorUnitTests<P extends PersistentProperty<P>
 
 		doReturn(2L, "FOO").when(provider).getParameterValue(any(Parameter.class));
 
-		var recursive = new ParameterValueProvider<P>() {
+		var recursive = parameter -> {
 
-			@Override
-			public <T> T getParameterValue(Parameter<T, P> parameter) {
-
-				if (parameter.getName().equals("id")) {
-					return (T) Long.valueOf(1);
-				}
-
-				if (parameter.getName().equals("sample")) {
-					return (T) instance.createInstance(inner, provider);
-				}
-
-				throw new UnsupportedOperationException(parameter.getName());
+			if ("id".equals(parameter.getName())) {
+				return (T) Long.valueOf(1);
 			}
+
+			if ("sample".equals(parameter.getName())) {
+				return (T) instance.createInstance(inner, provider);
+			}
+
+			throw new UnsupportedOperationException(parameter.getName());
 		};
 
 		var reference = this.instance.createInstance(outer, recursive);
@@ -197,21 +192,17 @@ class ClassGeneratingEntityInstantiatorUnitTests<P extends PersistentProperty<P>
 
 		doReturn(2L, "FOO").when(provider).getParameterValue(any(Parameter.class));
 
-		var provider = new ParameterValueProvider<P>() {
+		var provider = parameter -> {
 
-			@Override
-			public <T> T getParameterValue(Parameter<T, P> parameter) {
-
-				if (parameter.getName().equals("id")) {
-					return (T) Long.valueOf(1);
-				}
-
-				if (parameter.getName().equals("name")) {
-					return (T) "Walter";
-				}
-
-				throw new UnsupportedOperationException(parameter.getName());
+			if ("id".equals(parameter.getName())) {
+				return (T) Long.valueOf(1);
 			}
+
+			if ("name".equals(parameter.getName())) {
+				return (T) "Walter";
+			}
+
+			throw new UnsupportedOperationException(parameter.getName());
 		};
 
 		var result = this.instance.createInstance(entity, provider);
@@ -460,7 +451,7 @@ class ClassGeneratingEntityInstantiatorUnitTests<P extends PersistentProperty<P>
 		}
 	}
 
-	static class WithFactoryMethod {
+	static final class WithFactoryMethod {
 
 		final Long id;
 		final String name;
@@ -591,7 +582,7 @@ class ClassGeneratingEntityInstantiatorUnitTests<P extends PersistentProperty<P>
 
 	private static class PrivateInnerClass {}
 
-	static class ClassWithPrivateConstructor {
+	static final class ClassWithPrivateConstructor {
 
 		private ClassWithPrivateConstructor() {}
 	}
@@ -601,7 +592,7 @@ class ClassGeneratingEntityInstantiatorUnitTests<P extends PersistentProperty<P>
 		ClassWithPackagePrivateConstructor() {}
 	}
 
-	public static abstract class AbstractDto {
+	public abstract static class AbstractDto {
 
 	}
 

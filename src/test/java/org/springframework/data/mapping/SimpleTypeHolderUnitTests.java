@@ -154,7 +154,7 @@ public class SimpleTypeHolderUnitTests {
 
 	enum SimpleEnum {
 
-		FOO;
+		FOO
 	}
 
 	enum ComplexEnum {

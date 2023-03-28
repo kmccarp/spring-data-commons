@@ -94,7 +94,7 @@ public abstract class AbstractMappingContext<E extends MutablePersistentEntity<?
 
 	private static final Log LOGGER = LogFactory.getLog(MappingContext.class);
 
-	private final Optional<E> NONE = Optional.empty();
+	private final Optional<E> none = Optional.empty();
 	private final Map<TypeInformation<?>, Optional<E>> persistentEntities = new HashMap<>();
 	private final PersistentPropertyAccessorFactory persistentPropertyAccessorFactory;
 	private final PersistentPropertyPathFactory<E, P> persistentPropertyPathFactory;
@@ -104,7 +104,7 @@ public abstract class AbstractMappingContext<E extends MutablePersistentEntity<?
 
 	private ManagedTypes managedTypes = ManagedTypes.empty();
 
-	private boolean strict = false;
+	private boolean strict;
 	private SimpleTypeHolder simpleTypeHolder = SimpleTypeHolder.DEFAULT;
 
 	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
@@ -265,7 +265,7 @@ public abstract class AbstractMappingContext<E extends MutablePersistentEntity<?
 
 			try {
 				write.lock();
-				persistentEntities.put(type, NONE);
+				persistentEntities.put(type, none);
 			} finally {
 				write.unlock();
 			}
@@ -673,12 +673,12 @@ public abstract class AbstractMappingContext<E extends MutablePersistentEntity<?
 	}
 
 	/**
-	 * Filter rejecting static fields as well as artificially introduced ones. See
-	 * {@link PersistentPropertyFilter#UNMAPPED_PROPERTIES} for details.
-	 *
-	 * @author Oliver Gierke
-	 */
-	static enum PersistentPropertyFilter implements FieldFilter {
+		* Filter rejecting static fields as well as artificially introduced ones. See
+		* {@link PersistentPropertyFilter#UNMAPPED_PROPERTIES} for details.
+		*
+		* @author Oliver Gierke
+		*/
+	enum PersistentPropertyFilter implements FieldFilter {
 
 		INSTANCE;
 
@@ -764,11 +764,7 @@ public abstract class AbstractMappingContext<E extends MutablePersistentEntity<?
 					return false;
 				}
 
-				if ((typeName != null) && !type.getName().equals(typeName)) {
-					return false;
-				}
-
-				return true;
+				return !((typeName != null) && !type.getName().equals(typeName));
 			}
 		}
 	}

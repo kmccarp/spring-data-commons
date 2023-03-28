@@ -50,7 +50,7 @@ import org.springframework.util.ConcurrentReferenceHashMap;
  */
 class ProxyProjectionFactory implements ProjectionFactory, BeanClassLoaderAware {
 
-	final static GenericConversionService CONVERSION_SERVICE = new DefaultConversionService();
+	static final GenericConversionService CONVERSION_SERVICE = new DefaultConversionService();
 
 	static {
 		Jsr310Converters.getConvertersToRegister().forEach(CONVERSION_SERVICE::addConverter);
@@ -239,7 +239,7 @@ class ProxyProjectionFactory implements ProjectionFactory, BeanClassLoaderAware 
 	 *
 	 * @author Oliver Gierke
 	 */
-	private static enum MapAccessingMethodInterceptorFactory implements MethodInterceptorFactory {
+	private enum MapAccessingMethodInterceptorFactory implements MethodInterceptorFactory {
 
 		INSTANCE;
 
@@ -260,7 +260,7 @@ class ProxyProjectionFactory implements ProjectionFactory, BeanClassLoaderAware 
 	 *
 	 * @author Oliver Gierke
 	 */
-	private static enum PropertyAccessingMethodInvokerFactory implements MethodInterceptorFactory {
+	private enum PropertyAccessingMethodInvokerFactory implements MethodInterceptorFactory {
 
 		INSTANCE;
 

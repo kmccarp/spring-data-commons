@@ -254,7 +254,7 @@ class EventPublishingRepositoryProxyPostProcessorUnitTests {
 			EventPublishingMethodInterceptor//
 					.of(EventPublishingMethod.of(OneEvent.class), publisher)//
 					.invoke(invocation);
-		} catch (IllegalStateException o_O) {
+		} catch (IllegalStateException oO) {
 			verify(publisher, never()).publishEvent(any(SomeEvent.class));
 		}
 	}
