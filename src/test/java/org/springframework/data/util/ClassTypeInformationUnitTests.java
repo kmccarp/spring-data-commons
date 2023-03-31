@@ -540,7 +540,7 @@ public class ClassTypeInformationUnitTests {
 
 	}
 
-	static abstract class SpecialPerson extends Person {
+	abstract static class SpecialPerson extends Person {
 		protected SpecialPerson(Integer ssn, String firstName, String lastName) {
 			super(ssn, firstName, lastName);
 		}
@@ -642,15 +642,15 @@ public class ClassTypeInformationUnitTests {
 
 	// DATACMNS-590
 
-	static abstract class GenericRoot<T extends GenericSub<?>> {
+	abstract static class GenericRoot<T extends GenericSub<?>> {
 		List<T> subs;
 	}
 
-	static abstract class GenericSub<T extends GenericSubSub> {
+	abstract static class GenericSub<T extends GenericSubSub> {
 		T subSub;
 	}
 
-	static abstract class GenericSubSub {}
+	abstract static class GenericSubSub {}
 
 	static class ConcreteRoot extends GenericRoot<ConcreteSub> {}
 
@@ -666,11 +666,11 @@ public class ClassTypeInformationUnitTests {
 		T content;
 	}
 
-	static abstract class GenericRootIntermediate<T> {
+	abstract static class GenericRootIntermediate<T> {
 		Intermediate<T> intermediate;
 	}
 
-	static abstract class GenericInnerIntermediate<T> {
+	abstract static class GenericInnerIntermediate<T> {
 		Intermediate<T> intermediate;
 	}
 
@@ -687,7 +687,7 @@ public class ClassTypeInformationUnitTests {
 
 	static class Foo extends TypeWithAbstractGenericType<Character, Integer> {}
 
-	static abstract class AbstractBar<T, S> {}
+	abstract static class AbstractBar<T, S> {}
 
 	static class Bar<T, S> extends AbstractBar<T, S> {
 		T field;
@@ -734,7 +734,7 @@ public class ClassTypeInformationUnitTests {
 		DomainEvent<A, ID> event;
 	}
 
-	static abstract class DomainEvent<T extends Aggregate, ID> {
+	abstract static class DomainEvent<T extends Aggregate, ID> {
 
 		ID aggregateId;
 		T root;

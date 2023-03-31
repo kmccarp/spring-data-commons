@@ -15,7 +15,7 @@
  */
 package org.springframework.data.mapping.model;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.data.annotation.PersistenceCreator;
@@ -29,7 +29,7 @@ import org.springframework.data.util.TypeInformation;
  */
 class FactoryMethodUnitTests {
 
-	private static EntityInstantiators instantiators = new EntityInstantiators();
+	private static final EntityInstantiators instantiators = new EntityInstantiators();
 
 	@Test
 	void shouldCreateInstanceThroughFactoryMethod() {
@@ -37,29 +37,26 @@ class FactoryMethodUnitTests {
 		var entity = new BasicPersistentEntity<>(TypeInformation.of(FactoryPerson.class));
 
 		var result = instantiators.getInstantiatorFor(entity).createInstance(entity,
-				new ParameterValueProvider() {
+				parameter -> {
 
-					@Override
-					public Object getParameterValue(Parameter parameter) {
-
-						if (parameter.getName().equals("firstname")) {
-							return "Walter";
-						}
-
-						if (parameter.getName().equals("lastname")) {
-							return "White";
-						}
-						return null;
+					if ("firstname".equals(parameter.getName())) {
+						return "Walter";
 					}
+
+					if ("lastname".equals(parameter.getName())) {
+						return "White";
+					}
+					return null;
 				});
 
 		assertThat(result.firstname).isEqualTo("Walter");
 		assertThat(result.lastname).isEqualTo("Mr. White");
 	}
 
-	static class FactoryPerson {
+	static final class FactoryPerson {
 
-		private final String firstname, lastname;
+		private final String firstname;
+		private final String lastname;
 
 		private FactoryPerson(String firstname, String lastname) {
 			this.firstname = firstname;

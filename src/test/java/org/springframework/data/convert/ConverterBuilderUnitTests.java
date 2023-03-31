@@ -36,7 +36,7 @@ class ConverterBuilderUnitTests {
 	@Test // DATACMNS-1034
 	void setsUpBidirectionalConvertersFromReading() {
 
-		var builder = ConverterBuilder.reading(String.class, Long.class, it -> Long.valueOf(it))
+		var builder = ConverterBuilder.reading(String.class, Long.class, Long::valueOf)
 				.andWriting(Object::toString);
 
 		assertConverter(builder.getReadingConverter(), "1", 1L);
@@ -47,7 +47,7 @@ class ConverterBuilderUnitTests {
 	void setsUpBidirectionalConvertersFromWriting() {
 
 		var builder = ConverterBuilder.writing(Long.class, String.class, Object::toString)
-				.andReading(it -> Long.valueOf(it));
+				.andReading(Long::valueOf);
 
 		assertConverter(builder.getReadingConverter(), "1", 1L);
 		assertConverter(builder.getWritingConverter(), 1L, "1");
@@ -57,7 +57,7 @@ class ConverterBuilderUnitTests {
 	void setsUpReadingConverter() {
 
 		var builder = ConverterBuilder.reading(String.class, Long.class,
-				string -> Long.valueOf(string));
+				Long::valueOf);
 
 		assertConverter(builder.getReadingConverter(), "1", 1L);
 		assertOnlyConverter(builder, builder::getReadingConverter);

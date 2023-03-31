@@ -40,7 +40,10 @@ import org.springframework.data.mapping.PersistentPropertyPath;
 @ExtendWith(MockitoExtension.class)
 class DefaultPersistentPropertyPathUnitTests<P extends PersistentProperty<P>> {
 
-	@Mock P first, second;
+	@Mock
+	P first;
+	@Mock
+	P second;
 
 	@Mock Converter<P, String> converter;
 
@@ -143,7 +146,7 @@ class DefaultPersistentPropertyPathUnitTests<P extends PersistentProperty<P>> {
 	@Test // DATACMNS-1466
 	void returnsNullForLeafPropertyOnEmptyPath() {
 
-		PersistentPropertyPath<P> path = new DefaultPersistentPropertyPath<P>(Collections.emptyList());
+		PersistentPropertyPath<P> path = new DefaultPersistentPropertyPath<>(Collections.emptyList());
 
 		assertThat(path.getLeafProperty()).isNull();
 	}
@@ -151,7 +154,7 @@ class DefaultPersistentPropertyPathUnitTests<P extends PersistentProperty<P>> {
 	@Test // DATACMNS-1466
 	void returnsNullForBasePropertyOnEmptyPath() {
 
-		PersistentPropertyPath<P> path = new DefaultPersistentPropertyPath<P>(Collections.emptyList());
+		PersistentPropertyPath<P> path = new DefaultPersistentPropertyPath<>(Collections.emptyList());
 
 		assertThat(path.getBaseProperty()).isNull();
 	}

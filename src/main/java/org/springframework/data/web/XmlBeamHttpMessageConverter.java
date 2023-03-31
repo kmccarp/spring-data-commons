@@ -117,14 +117,14 @@ public class XmlBeamHttpMessageConverter extends AbstractHttpMessageConverter<Ob
 
 			return projectionFactory.io().stream(inputMessage.getBody()).read(clazz);
 
-		} catch (RuntimeException o_O) {
+		} catch (RuntimeException oO) {
 
-			Throwable cause = o_O.getCause();
+			Throwable cause = oO.getCause();
 
 			if (SAXParseException.class.isInstance(cause)) {
 				throw new HttpMessageNotReadableException("Cannot read input message", cause, inputMessage);
 			} else {
-				throw o_O;
+				throw oO;
 			}
 		}
 	}

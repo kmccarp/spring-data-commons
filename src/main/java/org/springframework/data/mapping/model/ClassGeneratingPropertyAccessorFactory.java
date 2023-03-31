@@ -318,8 +318,8 @@ public class ClassGeneratingPropertyAccessorFactory implements PersistentPropert
 
 				try {
 					return ClassUtils.forName(className, classLoader);
-				} catch (Exception o_O) {
-					throw new IllegalStateException(o_O);
+				} catch (Exception oO) {
+					throw new IllegalStateException(oO);
 				}
 			}
 
@@ -366,7 +366,7 @@ public class ClassGeneratingPropertyAccessorFactory implements PersistentPropert
 				}
 			});
 
-			entity.doWithProperties((SimplePropertyHandler) property -> persistentProperties.add(property));
+			entity.doWithProperties((SimplePropertyHandler) persistentProperties::add);
 
 			return persistentProperties;
 		}
@@ -557,17 +557,14 @@ public class ClassGeneratingPropertyAccessorFactory implements PersistentPropert
 		@SuppressWarnings("null")
 		private static List<Class<?>> getPropertyDeclaratingClasses(List<PersistentProperty<?>> persistentProperties) {
 
-			return persistentProperties.stream().flatMap(property -> {
-				return Optionals
+			return persistentProperties.stream().flatMap(property -> Optionals
 						.toStream(Optional.ofNullable(property.getField()), Optional.ofNullable(property.getGetter()),
 								Optional.ofNullable(property.getSetter()))
 
 						// keep it a lambda to infer the correct types, preventing
 						// LambdaConversionException: Invalid receiver type class java.lang.reflect.AccessibleObject; not a subtype
 						// of implementation type interface java.lang.reflect.Member
-						.map(it -> it.getDeclaringClass());
-
-			}).collect(Collectors.collectingAndThen(Collectors.toSet(), it -> new ArrayList<>(it)));
+						.map(Member::getDeclaringClass)).collect(Collectors.collectingAndThen(Collectors.toSet(), ArrayList::new));
 
 		}
 

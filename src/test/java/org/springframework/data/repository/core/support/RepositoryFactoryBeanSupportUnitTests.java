@@ -16,16 +16,12 @@
 package org.springframework.data.repository.core.support;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.Repository;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.test.util.ReflectionTestUtils;
 
 /**
@@ -78,13 +74,9 @@ class RepositoryFactoryBeanSupportUnitTests {
 		RepositoryFactoryBeanSupport<SampleRepository, Object, Long> factoryBean = //
 				new DummyRepositoryFactoryBean<>(SampleRepository.class);
 		factoryBean.addRepositoryFactoryCustomizer(repositoryFactory -> repositoryFactory
-				.addRepositoryProxyPostProcessor((factory, repositoryInformation) -> factory.addAdvice(new MethodInterceptor() {
-					@Nullable
-					@Override
-					public Object invoke(@NonNull MethodInvocation invocation) {
-						throw new UnsupportedOperationException();
-					}
-				})));
+				.addRepositoryProxyPostProcessor((factory, repositoryInformation) -> factory.addAdvice(invocation -> {
+			throw new UnsupportedOperationException();
+		})));
 		factoryBean.afterPropertiesSet();
 
 		try {
@@ -110,7 +102,7 @@ class RepositoryFactoryBeanSupportUnitTests {
 		bean.afterPropertiesSet();
 
 		assertThatIllegalStateException() //
-				.isThrownBy(() -> bean.getPersistentEntity());
+				.isThrownBy(bean::getPersistentEntity);
 	}
 
 	interface SampleRepository extends Repository<Object, Long> {
