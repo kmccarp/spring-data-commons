@@ -176,7 +176,7 @@ public class JsonProjectingMethodInterceptorFactory implements MethodInterceptor
 
 					return isCollectionResult ? result : result.isEmpty() ? null : result.get(0);
 
-				} catch (PathNotFoundException o_O) {
+				} catch (PathNotFoundException oO) {
 					// continue with next path
 				}
 			}

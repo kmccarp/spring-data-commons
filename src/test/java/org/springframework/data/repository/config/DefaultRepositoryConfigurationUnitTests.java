@@ -93,7 +93,8 @@ class DefaultRepositoryConfigurationUnitTests {
 	@Value
 	@EqualsAndHashCode(callSuper = true)
 	private static class SimplerRepositoryConfigurationExtension extends RepositoryConfigurationExtensionSupport {
-		String repositoryFactoryBeanClassName, modulePrefix;
+		String repositoryFactoryBeanClassName;
+		String modulePrefix;
 	}
 
 	private static RootBeanDefinition createBeanDefinition(String repositoryInterfaceName) {

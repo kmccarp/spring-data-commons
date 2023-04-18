@@ -154,7 +154,7 @@ class MappingAuditableBeanWrapperFactoryUnitTests {
 		sample.modified = Instant.now();
 
 		var result = factory.getBeanWrapperFor(sample) //
-				.flatMap(it -> it.getLastModifiedDate());
+				.flatMap(AuditableBeanWrapper::getLastModifiedDate);
 
 		assertThat(result).hasValue(sample.modified);
 	}
@@ -248,7 +248,7 @@ class MappingAuditableBeanWrapperFactoryUnitTests {
 		sample.lastModifiedDate = source;
 
 		var result = factory.getBeanWrapperFor(sample) //
-				.flatMap(it -> it.getLastModifiedDate());
+				.flatMap(AuditableBeanWrapper::getLastModifiedDate);
 
 		assertThat(result).hasValueSatisfying(ta -> compareTemporalAccessors(expected, ta));
 	}
@@ -290,7 +290,7 @@ class MappingAuditableBeanWrapperFactoryUnitTests {
 
 	static class NoAuditing {}
 
-	static abstract class ExtendingAuditable implements Auditable<Object, Long, LocalDateTime> {}
+	abstract static class ExtendingAuditable implements Auditable<Object, Long, LocalDateTime> {}
 
 	// DATACMNS-1274
 

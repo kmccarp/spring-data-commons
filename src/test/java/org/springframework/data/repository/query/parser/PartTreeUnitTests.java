@@ -50,8 +50,8 @@ import org.springframework.data.repository.query.parser.PartTree.OrPart;
  */
 class PartTreeUnitTests {
 
-	private String[] PREFIXES = { "find", "read", "get", "query", "search", "stream", "count", "delete", "remove",
-			"exists" };
+	private final String[] prefixes = {"find", "read", "get", "query", "search", "stream", "count", "delete", "remove",
+"exists"};
 
 	@Test
 	void rejectsNullSource() {
@@ -113,7 +113,7 @@ class PartTreeUnitTests {
 
 	@Test
 	void detectsDistinctCorrectly() throws Exception {
-		for (var prefix : PREFIXES) {
+		for (var prefix : prefixes) {
 			detectsDistinctCorrectly(prefix + "DistinctByLastname", true);
 			detectsDistinctCorrectly(prefix + "UsersDistinctByLastname", true);
 			detectsDistinctCorrectly(prefix + "DistinctUsersByLastname", true);

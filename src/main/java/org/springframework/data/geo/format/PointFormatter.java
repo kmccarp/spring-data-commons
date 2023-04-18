@@ -54,8 +54,8 @@ public enum PointFormatter implements Converter<String, Point>, Formatter<Point>
 
 			return new Point(longitude, latitude);
 
-		} catch (NumberFormatException o_O) {
-			throw new IllegalArgumentException(String.format(INVALID_FORMAT, source), o_O);
+		} catch (NumberFormatException oO) {
+			throw new IllegalArgumentException(String.format(INVALID_FORMAT, source), oO);
 		}
 	}
 

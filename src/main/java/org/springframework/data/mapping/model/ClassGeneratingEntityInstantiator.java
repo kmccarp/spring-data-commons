@@ -207,12 +207,7 @@ class ClassGeneratingEntityInstantiator implements EntityInstantiator {
 				return true;
 			}
 		}
-
-		if (!ClassUtils.isPresent(ObjectInstantiator.class.getName(), type.getClassLoader())) {
-			return true;
-		}
-
-		return false;
+		return !ClassUtils.isPresent(ObjectInstantiator.class.getName(), type.getClassLoader());
 	}
 
 	/**
@@ -321,7 +316,7 @@ class ClassGeneratingEntityInstantiator implements EntityInstantiator {
 	 * @author Mark Paluch
 	 * @since 2.5
 	 */
-	static class MappingInstantiationExceptionEntityInstantiator implements EntityInstantiator {
+	static final class MappingInstantiationExceptionEntityInstantiator implements EntityInstantiator {
 
 		private final Class<?> typeToCreate;
 
@@ -411,8 +406,8 @@ class ClassGeneratingEntityInstantiator implements EntityInstantiator {
 
 				try {
 					return ClassUtils.forName(className, classLoader);
-				} catch (Exception o_O) {
-					throw new IllegalStateException(o_O);
+				} catch (Exception oO) {
+					throw new IllegalStateException(oO);
 				}
 			}
 

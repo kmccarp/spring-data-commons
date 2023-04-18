@@ -104,18 +104,9 @@ public class InstantiationAwarePropertyAccessor<T> implements PersistentProperty
 
 		EntityInstantiator instantiator = instantiators.getInstantiatorFor(owner);
 
-		this.bean = (T) instantiator.createInstance(owner, new ParameterValueProvider() {
-
-			@Override
-			@Nullable
-			@SuppressWarnings("null")
-			public Object getParameterValue(Parameter parameter) {
-
-				return property.getName().equals(parameter.getName()) //
-						? value
-						: delegate.getProperty(owner.getRequiredPersistentProperty(parameter.getName()));
-			}
-		});
+		this.bean = (T) instantiator.createInstance(owner, parameter -> property.getName().equals(parameter.getName()) //
+	? value
+	: delegate.getProperty(owner.getRequiredPersistentProperty(parameter.getName())));
 	}
 
 	@Nullable

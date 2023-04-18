@@ -268,7 +268,7 @@ public class QuerydslBindings {
 		try {
 			PathInformation propertyPath = PropertyPathInformation.of(path, type);
 			return isPathVisible(propertyPath) ? propertyPath : null;
-		} catch (PropertyReferenceException o_O) {
+		} catch (PropertyReferenceException oO) {
 			return null;
 		}
 	}

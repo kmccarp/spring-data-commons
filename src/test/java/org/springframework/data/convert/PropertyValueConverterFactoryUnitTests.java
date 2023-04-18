@@ -117,21 +117,7 @@ public class PropertyValueConverterFactoryUnitTests {
 
 		PropertyValueConverter expected = mock(PropertyValueConverter.class);
 
-		PropertyValueConverterFactory factory = PropertyValueConverterFactory.chained(new PropertyValueConverterFactory() {
-			@Nullable
-			@Override
-			public <S, T, C extends ValueConversionContext<?>> PropertyValueConverter<S, T, C> getConverter(
-					Class<? extends PropertyValueConverter<S, T, C>> converterType) {
-				return null;
-			}
-		}, new PropertyValueConverterFactory() {
-			@Nullable
-			@Override
-			public <S, T, C extends ValueConversionContext<?>> PropertyValueConverter<S, T, C> getConverter(
-					Class<? extends PropertyValueConverter<S, T, C>> converterType) {
-				return expected;
-			}
-		});
+		PropertyValueConverterFactory factory = PropertyValueConverterFactory.chained(converterType -> null, converterType -> expected);
 
 		assertThat(factory.getConverter(ConverterWithDefaultCtor.class)).isSameAs(expected);
 	}
@@ -139,20 +125,8 @@ public class PropertyValueConverterFactoryUnitTests {
 	@Test // GH-1484
 	void chainedConverterFactoryFailsOnException() {
 
-		PropertyValueConverterFactory factory = PropertyValueConverterFactory.chained(new PropertyValueConverterFactory() {
-			@Nullable
-			@Override
-			public <S, T, C extends ValueConversionContext<?>> PropertyValueConverter<S, T, C> getConverter(
-					Class<? extends PropertyValueConverter<S, T, C>> converterType) {
-				return null;
-			}
-		}, new PropertyValueConverterFactory() {
-			@Nullable
-			@Override
-			public <S, T, C extends ValueConversionContext<?>> PropertyValueConverter<S, T, C> getConverter(
-					Class<? extends PropertyValueConverter<S, T, C>> converterType) {
-				throw new RuntimeException("can't touch this!");
-			}
+		PropertyValueConverterFactory factory = PropertyValueConverterFactory.chained(converterType -> null, converterType -> {
+			throw new RuntimeException("can't touch this!");
 		});
 
 		assertThatExceptionOfType(RuntimeException.class)

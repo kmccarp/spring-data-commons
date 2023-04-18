@@ -61,7 +61,7 @@ class DefaultPersistentPropertyPath<P extends PersistentProperty<P>> implements 
 	 * @return
 	 */
 	static <T extends PersistentProperty<T>> DefaultPersistentPropertyPath<T> empty() {
-		return new DefaultPersistentPropertyPath<T>(Collections.emptyList());
+		return new DefaultPersistentPropertyPath<>(Collections.emptyList());
 	}
 
 	/**
@@ -120,7 +120,7 @@ class DefaultPersistentPropertyPath<P extends PersistentProperty<P>> implements 
 	@Override
 	public P getLeafProperty() {
 
-		Assert.state(properties.size() > 0, "Empty PersistentPropertyPath should not exist");
+		Assert.state(!properties.isEmpty(), "Empty PersistentPropertyPath should not exist");
 
 		return properties.get(properties.size() - 1);
 	}
@@ -128,7 +128,7 @@ class DefaultPersistentPropertyPath<P extends PersistentProperty<P>> implements 
 	@Override
 	public P getBaseProperty() {
 
-		Assert.state(properties.size() > 0, "Empty PersistentPropertyPath should not exist");
+		Assert.state(!properties.isEmpty(), "Empty PersistentPropertyPath should not exist");
 
 		return properties.get(0);
 	}

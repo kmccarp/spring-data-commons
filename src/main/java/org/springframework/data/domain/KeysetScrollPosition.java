@@ -102,10 +102,12 @@ public final class KeysetScrollPosition implements ScrollPosition {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if (o == null || getClass() != o.getClass()) {
 			return false;
+		}
 		KeysetScrollPosition that = (KeysetScrollPosition) o;
 		return ObjectUtils.nullSafeEquals(keys, that.keys) && direction == that.direction;
 	}
@@ -139,6 +141,6 @@ public final class KeysetScrollPosition implements ScrollPosition {
 		/**
 		 * Backward direction to scroll from the end of the results to their beginning.
 		 */
-		Backward;
+		Backward
 	}
 }
