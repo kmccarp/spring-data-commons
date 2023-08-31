@@ -427,7 +427,7 @@ class AbstractMappingContextUnitTests {
 		protected <S> BasicPersistentEntity<Object, SamplePersistentProperty> createPersistentEntity(
 				TypeInformation<S> typeInformation) {
 
-			return new BasicPersistentEntity<Object, SamplePersistentProperty>((TypeInformation<Object>) typeInformation) {
+			return new BasicPersistentEntity<>((TypeInformation<Object>) typeInformation) {
 
 				@Override
 				public void verify() {
@@ -530,7 +530,7 @@ class AbstractMappingContextUnitTests {
 		Map<MapKey, Integer> mapOfKeyToPerson;
 	}
 
-	static abstract class Base$$SpringProxy$873fa2e extends Base implements SpringProxy, Advised {
+	abstract static class Base$$SpringProxy$873fa2e extends Base implements SpringProxy, Advised {
 
 	}
 

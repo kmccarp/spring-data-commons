@@ -393,7 +393,8 @@ class ResultProcessorUnitTests {
 	}
 
 	static class Sample {
-		public String firstname, lastname;
+		public String firstname;
+		public String lastname;
 
 		public Sample(String firstname, String lastname) {
 			this.firstname = firstname;
@@ -401,8 +402,9 @@ class ResultProcessorUnitTests {
 		}
 	}
 
-	static abstract class AbstractDto {
-		final String firstname, lastname;
+	abstract static class AbstractDto {
+		final String firstname;
+		final String lastname;
 
 		public AbstractDto(String firstname, String lastname) {
 			this.firstname = firstname;

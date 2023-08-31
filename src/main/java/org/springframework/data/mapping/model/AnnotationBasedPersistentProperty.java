@@ -89,7 +89,7 @@ public abstract class AnnotationBasedPersistentProperty<P extends PersistentProp
 				.map(this::findAnnotation) //
 				.map(Reference::to) //
 				.map(it -> !Class.class.equals(it) ? TypeInformation.of(it) : getActualTypeInformation()) //
-				.orElseGet(() -> super.getAssociationTargetTypeInformation());
+				.orElseGet(super::getAssociationTargetTypeInformation);
 	});
 
 	/**
@@ -243,13 +243,10 @@ public abstract class AnnotationBasedPersistentProperty<P extends PersistentProp
 			return (Optional<A>) annotation;
 		}
 
-		return (Optional<A>) annotationCache.computeIfAbsent(annotationType, type -> {
-
-			return getAccessors() //
+		return (Optional<A>) annotationCache.computeIfAbsent(annotationType, type -> getAccessors() //
 					.map(it -> AnnotatedElementUtils.findMergedAnnotation(it, type)) //
 					.flatMap(StreamUtils::fromNullable) //
-					.findFirst();
-		});
+					.findFirst());
 	}
 
 	@Nullable

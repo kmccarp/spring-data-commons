@@ -70,7 +70,7 @@ class LazyUnitTests {
 	@Test
 	void returnsCachedInstanceOnMultipleAccesses() {
 
-		var lazy = Lazy.of(() -> new Object());
+		var lazy = Lazy.of(Object::new);
 
 		assertThat(lazy.get()).isSameAs(lazy.get());
 	}
