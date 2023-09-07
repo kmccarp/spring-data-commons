@@ -100,7 +100,7 @@ public @interface EnableSpringDataWebSupport {
 			imports.add(resourceLoader//
 					.filter(it -> ClassUtils.isPresent("org.springframework.hateoas.Link", it))//
 					.map(it -> HateoasAwareSpringDataWebConfiguration.class.getName())//
-					.orElseGet(() -> SpringDataWebConfiguration.class.getName()));
+					.orElseGet(SpringDataWebConfiguration.class::getName));
 
 			resourceLoader//
 					.filter(it -> ClassUtils.isPresent("com.fasterxml.jackson.databind.ObjectMapper", it))//

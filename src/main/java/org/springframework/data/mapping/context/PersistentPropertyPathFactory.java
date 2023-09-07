@@ -287,8 +287,8 @@ class PersistentPropertyPathFactory<E extends PersistentEntity<?, P>, P extends 
 
 	}
 
-	static class DefaultPersistentPropertyPaths<T, P extends PersistentProperty<P>>
-			implements PersistentPropertyPaths<T, P> {
+	static final class DefaultPersistentPropertyPaths<T, P extends PersistentProperty<P>>
+implements PersistentPropertyPaths<T, P> {
 
 		private static final Comparator<PersistentPropertyPath<? extends PersistentProperty<?>>> SHORTEST_PATH = Comparator
 				.comparingInt(PersistentPropertyPath::getLength);
@@ -398,7 +398,7 @@ class PersistentPropertyPathFactory<E extends PersistentEntity<?, P>, P extends 
 	 * {@link InvalidPersistentPropertyPath} on access of {@link #getResolvedPath()} if no corresponding property was
 	 * found.
 	 */
-	private static class PathResolution {
+	private static final class PathResolution {
 
 		private final PersistentPropertyPath<?> path;
 		private final boolean resolvable;
