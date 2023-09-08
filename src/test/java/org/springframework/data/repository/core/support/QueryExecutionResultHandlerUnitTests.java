@@ -398,7 +398,7 @@ class QueryExecutionResultHandlerUnitTests {
 			SoftAssertions.assertSoftly(s -> {
 
 				// for making the test failure more obvious:
-				s.assertThat(list).allMatch(it -> Integer.class.isInstance(it));
+				s.assertThat(list).allMatch(Integer.class::isInstance);
 				s.assertThat(list).containsExactly(0, 1);
 			});
 		});
