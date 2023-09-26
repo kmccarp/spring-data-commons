@@ -228,7 +228,7 @@ public class AbstractPersistentPropertyUnitTests {
 
 		assertThat(property.isAssociation()).isTrue();
 		assertThat(property.getAssociationTargetType()).isEqualTo(JMoleculesAggregate.class);
-		assertThat(property.getPersistentEntityTypeInformation()).extracting(it -> it.getType())
+		assertThat(property.getPersistentEntityTypeInformation()).extracting(org.springframework.data.util.TypeInformation::getType)
 				.containsExactly((Class) JMoleculesAggregate.class);
 	}
 

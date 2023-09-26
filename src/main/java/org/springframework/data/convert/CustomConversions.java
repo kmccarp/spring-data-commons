@@ -666,7 +666,7 @@ public class CustomConversions {
 	 * @author Oliver Gierke
 	 * @author Mark Paluch
 	 */
-	private static class ConverterRegistration {
+	private static final class ConverterRegistration {
 
 		private final Object converter;
 		private final ConvertiblePair convertiblePair;
@@ -742,7 +742,7 @@ public class CustomConversions {
 	 *
 	 * @author Oliver Gierke
 	 */
-	public static class StoreConversions {
+	public static final class StoreConversions {
 
 		public static final StoreConversions NONE = StoreConversions.of(SimpleTypeHolder.DEFAULT, Collections.emptyList());
 
