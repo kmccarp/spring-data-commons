@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -68,9 +69,13 @@ import org.springframework.util.ClassUtils;
  */
 public class CustomCollections {
 
-	private static final Set<Class<?>> CUSTOM_TYPES, CUSTOM_MAP_TYPES, CUSTOM_COLLECTION_TYPES, PAGINATION_RETURN_TYPES;
+	private static final Set<Class<?>> CUSTOM_TYPES;
+	private static final Set<Class<?>> CUSTOM_MAP_TYPES;
+	private static final Set<Class<?>> CUSTOM_COLLECTION_TYPES;
+	private static final Set<Class<?>> PAGINATION_RETURN_TYPES;
 	private static final Set<Class<?>> COLLECTIONS_AND_MAP = Set.of(Collection.class, List.class, Set.class, Map.class);
-	private static final SearchableTypes MAP_TYPES, COLLECTION_TYPES;
+	private static final SearchableTypes MAP_TYPES;
+	private static final SearchableTypes COLLECTION_TYPES;
 	private static final Collection<CustomCollectionRegistrar> REGISTRARS;
 
 	static {
@@ -199,9 +204,9 @@ public class CustomCollections {
 
 	private static class SearchableTypes {
 
-		private static final BiPredicate<Class<?>, Class<?>> EQUALS = (left, right) -> left.equals(right);
-		private static final BiPredicate<Class<?>, Class<?>> IS_ASSIGNABLE = (left, right) -> left.isAssignableFrom(right);
-		private static final Function<Class<?>, Boolean> IS_NOT_NULL = it -> it != null;
+		private static final BiPredicate<Class<?>, Class<?>> EQUALS = Object::equals;
+		private static final BiPredicate<Class<?>, Class<?>> IS_ASSIGNABLE = Class::isAssignableFrom;
+		private static final Function<Class<?>, Boolean> IS_NOT_NULL = Objects::nonNull;
 
 		private final Collection<Class<?>> types;
 
@@ -246,7 +251,7 @@ public class CustomCollections {
 
 			Supplier<String> message = () -> String.format("Type %s not contained in candidates %s", type, types);
 
-			return isOneOf(type, (l, r) -> l.isAssignableFrom(r), rejectNull(message));
+			return isOneOf(type, Class::isAssignableFrom, rejectNull(message));
 		}
 
 		/**
@@ -326,7 +331,7 @@ public class CustomCollections {
 		@SuppressWarnings("null")
 		public Function<Object, Object> toJavaNativeCollection() {
 
-			return source -> source instanceof io.vavr.collection.Traversable
+			return source -> source instanceof Traversable
 					? VavrToJavaCollectionConverter.INSTANCE.convert(source, TypeDescriptor.forObject(source), OBJECT_DESCRIPTOR)
 					: source;
 		}
@@ -361,8 +366,8 @@ public class CustomCollections {
 					return null;
 				}
 
-				if (source instanceof io.vavr.collection.Seq) {
-					return ((io.vavr.collection.Seq<?>) source).asJava();
+				if (source instanceof Seq) {
+					return ((Seq<?>) source).asJava();
 				}
 
 				if (source instanceof io.vavr.collection.Map) {
@@ -386,15 +391,15 @@ public class CustomCollections {
 			static {
 
 				Set<ConvertiblePair> pairs = new HashSet<>();
-				pairs.add(new ConvertiblePair(Collection.class, io.vavr.collection.Traversable.class));
-				pairs.add(new ConvertiblePair(Map.class, io.vavr.collection.Traversable.class));
+				pairs.add(new ConvertiblePair(Collection.class, Traversable.class));
+				pairs.add(new ConvertiblePair(Map.class, Traversable.class));
 
 				CONVERTIBLE_PAIRS = Collections.unmodifiableSet(pairs);
 			}
 
 			@NonNull
 			@Override
-			public java.util.Set<ConvertiblePair> getConvertibleTypes() {
+			public Set<ConvertiblePair> getConvertibleTypes() {
 				return CONVERTIBLE_PAIRS;
 			}
 
@@ -407,12 +412,8 @@ public class CustomCollections {
 				}
 
 				// Prevent maps to be mapped to collections
-				if (sourceType.isMap() && !(io.vavr.collection.Map.class.isAssignableFrom(targetType.getType())
-						|| targetType.getType().equals(Traversable.class))) {
-					return false;
-				}
-
-				return true;
+				return !(sourceType.isMap() && !(io.vavr.collection.Map.class.isAssignableFrom(targetType.getType())
+			|| targetType.getType().equals(Traversable.class)));
 			}
 
 			@Nullable
@@ -421,7 +422,7 @@ public class CustomCollections {
 
 				var targetType = targetDescriptor.getType();
 
-				if (io.vavr.collection.Seq.class.isAssignableFrom(targetType)) {
+				if (Seq.class.isAssignableFrom(targetType)) {
 					return io.vavr.collection.List.ofAll((Iterable<?>) source);
 				}
 
@@ -570,13 +571,9 @@ public class CustomCollections {
 				}
 
 				// Prevent maps to be mapped to collections
-				if (sourceType.isMap() //
-						&& !(MapIterable.class.isAssignableFrom(targetType.getType())
-								|| targetType.getType().equals(RichIterable.class))) {
-					return false;
-				}
-
-				return true;
+				return !(sourceType.isMap() //
+			&& !(MapIterable.class.isAssignableFrom(targetType.getType())
+			|| targetType.getType().equals(RichIterable.class)));
 			}
 
 			@Nullable
