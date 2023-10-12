@@ -233,7 +233,7 @@ public class DefaultMethodInvokingMethodInterceptor implements MethodInterceptor
 			} catch (Exception ex) {
 
 				// this is the signal that we are on Java 9 (encapsulated) and can't use the accessible constructor approach.
-				if (ex.getClass().getName().equals("java.lang.reflect.InaccessibleObjectException")) {
+				if ("java.lang.reflect.InaccessibleObjectException".equals(ex.getClass().getName())) {
 					return null;
 				}
 

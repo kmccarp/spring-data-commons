@@ -359,7 +359,7 @@ class EventPublishingRepositoryProxyPostProcessorUnitTests {
 		}
 	}
 
-	static class EventsWithClearing {
+	static final class EventsWithClearing {
 		final Collection<? extends Object> events;
 
 		private EventsWithClearing(Collection<? extends Object> events) {

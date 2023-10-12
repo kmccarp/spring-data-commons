@@ -36,7 +36,7 @@ public enum SurroundingTransactionDetectorMethodInterceptor implements MethodInt
 
 	INSTANCE;
 
-	private final ThreadLocal<Boolean> SURROUNDING_TX_ACTIVE = new ThreadLocal<>();
+	private static final ThreadLocal<Boolean> SURROUNDING_TX_ACTIVE = new ThreadLocal<>();
 
 	/**
 	 * Returns whether a transaction was active before the method call entered the repository proxy.
