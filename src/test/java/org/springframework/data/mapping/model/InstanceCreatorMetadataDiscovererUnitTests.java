@@ -33,7 +33,7 @@ class InstanceCreatorMetadataDiscovererUnitTests {
 	void shouldDiscoverConstructorForKotlinValueType() {
 
 		InstanceCreatorMetadata<SamplePersistentProperty> metadata = InstanceCreatorMetadataDiscoverer
-				.discover(new BasicPersistentEntity<Object, SamplePersistentProperty>(
+				.discover(new BasicPersistentEntity<>(
 						(TypeInformation) TypeInformation.of(MyNullableValueClass.class)));
 
 		assertThat(metadata).isNotNull();

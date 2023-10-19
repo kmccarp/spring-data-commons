@@ -51,8 +51,8 @@ import org.springframework.data.repository.query.parser.PartTree.OrPart;
  */
 class PartTreeUnitTests {
 
-	private String[] PREFIXES = { "find", "read", "get", "query", "search", "stream", "count", "delete", "remove",
-			"exists" };
+	private static final String[] PREFIXES = {"find", "read", "get", "query", "search", "stream", "count", "delete", "remove",
+"exists"};
 
 	@Test
 	void rejectsNullSource() {

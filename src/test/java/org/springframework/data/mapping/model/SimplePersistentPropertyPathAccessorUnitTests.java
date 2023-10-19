@@ -41,10 +41,10 @@ import org.springframework.data.mapping.context.SamplePersistentProperty;
  */
 class SimplePersistentPropertyPathAccessorUnitTests {
 
-	private SampleMappingContext context = new SampleMappingContext();
+	private final SampleMappingContext context = new SampleMappingContext();
 
-	private Customer first = new Customer("1");
-	private Customer second = new Customer("2");
+	private final Customer first = new Customer("1");
+	private final Customer second = new Customer("2");
 
 	@Test // DATACMNS-1438
 	void setsPropertyContainingCollectionPathForAllElements() {
@@ -111,9 +111,7 @@ class SimplePersistentPropertyPathAccessorUnitTests {
 		var type = source.getClass();
 
 		PersistentEntity<Object, SamplePersistentProperty> entity = context.getRequiredPersistentEntity(type);
-		var accessor = entity.getPropertyPathAccessor(source);
-
-		return accessor;
+		return entity.getPropertyPathAccessor(source);
 	}
 
 	static class Customer {

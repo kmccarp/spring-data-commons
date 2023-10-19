@@ -59,7 +59,7 @@ import org.springframework.util.Assert;
  * @author Mark Paluch
  * @since 2.1
  */
-public class SpelQueryContext {
+public final class SpelQueryContext {
 
 	private static final String SPEL_PATTERN_STRING = "([:?])#\\{([^}]+)}";
 	private static final Pattern SPEL_PATTERN = Pattern.compile(SPEL_PATTERN_STRING);
@@ -134,7 +134,7 @@ public class SpelQueryContext {
 	 * @author Oliver Gierke
 	 * @since 2.1
 	 */
-	public static class EvaluatingSpelQueryContext extends SpelQueryContext {
+	public static final class EvaluatingSpelQueryContext extends SpelQueryContext {
 
 		private final QueryMethodEvaluationContextProvider evaluationContextProvider;
 
