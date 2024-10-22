@@ -407,8 +407,8 @@ class RepositoryBeanDefinitionBuilder {
 		 * @see #forResourceLocation(String)
 		 */
 		public static RepositoryFactoriesLoader forDefaultResourceLocation(@Nullable ClassLoader classLoader) {
-			ClassLoader resourceClassLoader = (classLoader != null ? classLoader
-					: SpringFactoriesLoader.class.getClassLoader());
+			ClassLoader resourceClassLoader = classLoader != null ? classLoader
+					: SpringFactoriesLoader.class.getClassLoader();
 			return new RepositoryFactoriesLoader(classLoader,
 					loadFactoriesResource(resourceClassLoader, FACTORIES_RESOURCE_LOCATION));
 		}

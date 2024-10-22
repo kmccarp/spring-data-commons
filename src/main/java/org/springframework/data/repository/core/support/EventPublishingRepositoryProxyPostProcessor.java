@@ -86,7 +86,7 @@ public class EventPublishingRepositoryProxyPostProcessor implements RepositoryPr
 	 * @author Oliver Gierke
 	 * @since 1.13
 	 */
-	static class EventPublishingMethodInterceptor implements MethodInterceptor {
+	static final class EventPublishingMethodInterceptor implements MethodInterceptor {
 
 		private final EventPublishingMethod eventMethod;
 		private final ApplicationEventPublisher publisher;
@@ -130,8 +130,8 @@ public class EventPublishingRepositoryProxyPostProcessor implements RepositoryPr
 	}
 
 	private static boolean isDeleteMethod(String methodName) {
-		return methodName.equals("delete") || methodName.equals("deleteAll") || methodName.equals("deleteInBatch")
-				|| methodName.equals("deleteAllInBatch");
+		return "delete".equals(methodName) || "deleteAll".equals(methodName) || "deleteInBatch".equals(methodName)
+				|| "deleteAllInBatch".equals(methodName);
 	}
 
 	/**
@@ -238,7 +238,7 @@ public class EventPublishingRepositoryProxyPostProcessor implements RepositoryPr
 		private static <T extends Annotation> AnnotationDetectionMethodCallback<T> getDetector(Class<?> type,
 				Class<T> annotation) {
 
-			AnnotationDetectionMethodCallback<T> callback = new AnnotationDetectionMethodCallback<T>(annotation);
+			AnnotationDetectionMethodCallback<T> callback = new AnnotationDetectionMethodCallback<>(annotation);
 			ReflectionUtils.doWithMethods(type, callback);
 
 			return callback;

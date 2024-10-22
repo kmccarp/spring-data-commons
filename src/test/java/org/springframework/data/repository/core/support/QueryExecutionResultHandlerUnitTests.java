@@ -382,9 +382,8 @@ class QueryExecutionResultHandlerUnitTests {
 
 		var result = handler.postProcessInvocationResult(Arrays.asList("foo"), getMethod("customStreamable"));
 
-		assertThat(result).isInstanceOfSatisfying(CustomStreamableWrapper.class, it -> {
-			assertThat(it).containsExactly("foo");
-		});
+		assertThat(result).isInstanceOfSatisfying(CustomStreamableWrapper.class, it ->
+			assertThat(it).containsExactly("foo"));
 	}
 
 	@Test // DATACMNS-1482
@@ -393,11 +392,10 @@ class QueryExecutionResultHandlerUnitTests {
 		var result = handler.postProcessInvocationResult(asList(BigDecimal.ZERO, BigDecimal.ONE),
 				getMethod("listOfInteger"));
 
-		assertThat(result).isInstanceOfSatisfying(List.class, list -> {
+		assertThat(result).isInstanceOfSatisfying(List.class, list ->
 
 			// for making the test failure more obvious:
-			assertThat(list).allMatch(Integer.class::isInstance).containsExactly(0, 1);
-		});
+			assertThat(list).allMatch(Integer.class::isInstance).containsExactly(0, 1));
 	}
 
 	@Test // GH-3125
